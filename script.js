@@ -97,15 +97,30 @@ const playSong = (id) => {
     }
     userData.currentSong = song;
     playButton.classList.add("playing");
+    pauseButton.classList.remove("playing");
 
     audio.play();
 };
 
+const pauseSong = (id) => {
+    const song = userData?.songs.find((song) => song.id === id);
+    userData.currentSong = song;
+    userData.songCurrentTime = audio.currentTime;
+    pauseButton.classList.add("playing");
+    playButton.classList.remove("playing");
+
+    audio.pause();
+};
 playButton.addEventListener("click", () => {
     if (userData?.currentSong === null) {
         playSong(userData?.songs[0].id);
     } else {
         playSong(userData?.currentSong.id);
+    }
+});
+pauseButton.addEventListener("click", () => {
+    if (userData?.currentSong !== null) {
+        pauseSong(userData?.currentSong.id);
     }
 });
 
